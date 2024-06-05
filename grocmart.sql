@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 04, 2024 at 02:28 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Generation Time: Jun 05, 2024 at 09:18 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -21,82 +21,160 @@ SET time_zone = "+00:00";
 -- Database: `grocmart_db`
 --
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` int(100) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `password` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Dumping data for table `admin`
 --
 
 INSERT INTO `admin` (`id`, `name`, `password`) VALUES
-(1, 'admin', '6216f8a75fd5bb3d5f22b6f9958cdede3fc086c2');
+(1, 'admin', '111');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart`
+--
+
+CREATE TABLE `cart` (
+  `id` int(100) NOT NULL,
+  `user_id` int(100) NOT NULL,
+  `pid` int(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `price` int(10) NOT NULL,
+  `quantity` int(10) NOT NULL,
+  `image` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int(100) NOT NULL,
+  `user_id` int(100) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `number` varchar(10) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `method` varchar(50) NOT NULL,
+  `address` varchar(500) NOT NULL,
+  `total_products` varchar(1000) NOT NULL,
+  `total_price` int(100) NOT NULL,
+  `placed_on` date NOT NULL DEFAULT current_timestamp(),
+  `payment_status` varchar(20) NOT NULL DEFAULT 'pending',
+  `reference_number` varchar(255) NOT NULL,
+  `order_status` enum('to ship','to receive','delivered','cancelled') NOT NULL DEFAULT 'to ship',
+  `account_number` int(20) NOT NULL,
+  `account_name` varchar(50) NOT NULL,
+  `amount_paid` int(50) NOT NULL,
+  `archived` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `name`, `number`, `email`, `method`, `address`, `total_products`, `total_price`, `placed_on`, `payment_status`, `reference_number`, `order_status`) VALUES
-(2, 1, 'Hazel Bino', '0949660318', 'hazelbino837@gmail.com', 'cash on delivery', '1, tuscano, Albay, Polangui, Balinad, 4506', 'Hatsu Soda (50 x 1) - ', 50, '2024-06-01', 'pending', '', 'to receive'),
-(9, 1, 'Hazel Bino', '0949660318', 'hazelbino837@gmail.com', 'cash on delivery', '1, tuscano, Albay, Polangui, Balinad, 4506', 'Vita Drink (50 x 2) - ', 100, '2024-06-02', 'pending', '', 'to ship'),
-(10, 1, 'Hazel Bino', '0949660318', 'hazelbino837@gmail.com', 'cash on delivery', '1, tuscano, Albay, Polangui, Balinad, 4506', 'Orange (150 x 1) - ', 150, '2024-06-02', 'pending', '', 'to ship'),
-(12, 1, 'Hazel Bino', '0949660318', 'hazelbino837@gmail.com', 'gcash', '1, tuscano, Albay, Polangui, Balinad, 4506', 'Sun Puffs (25 x 1) - Hatsu Soda (50 x 1) - ', 75, '2024-06-02', 'completed', '09496603189', 'to ship'),
-(14, 1, 'Hazel Bino', '0949660318', 'hazelbino837@gmail.com', 'cash on delivery', '1, tuscano, Albay, Polangui, Balinad, 4506', 'Hatsu Soda (50 x 1) - apple (25 x 1) - ', 75, '2024-06-02', 'pending', '', 'to ship'),
-(15, 1, 'Hazel Bino', '0949660318', 'hazelbino837@gmail.com', 'cash on delivery', '1, tuscano, Albay, Polangui, Balinad, 4506', 'apple (25 x 1) - ', 25, '2024-06-02', 'pending', '', 'to ship'),
-(16, 1, 'Hazel Bino', '0949660318', 'hazelbino837@gmail.com', 'cash on delivery', '1, tuscano, Albay, Polangui, Balinad, 4506', 'apple (25 x 1) - ', 25, '2024-06-02', 'pending', '', 'to ship'),
-(17, 1, 'Hazel Bino', '0949660318', 'hazelbino837@gmail.com', 'cash on delivery', '1, tuscano, Albay, Polangui, Balinad, 4506', 'apple (25 x 1) - ', 25, '2024-06-02', 'pending', '', 'to ship'),
-(18, 2, 'Ruffa Mae Nabor', '0977043572', 'ruffamaenabor@gmail.com', 'gcash', '1, cute, Albay, Guinobatan, Lomacao, 4503', 'Capsicum (50 x 1) - Apple (25 x 1) - Sun Puffs (25 x 1) - ', 100, '2024-06-03', 'pending', '111111111111', 'to ship'),
-(19, 4, 'Krizia Alvarez', '0987654323', 'kriziaalvarez@gmail.com', 'gcash', '1, , Albay, Guinobatan, Lomacao, 4503', 'Capsicum (50 x 2) - Hatsu Soda (50 x 6) - ', 400, '2024-06-03', 'completed', '555555555555555', 'delivered'),
-(20, 4, 'Krizia Alvarez', '0987654323', 'kriziaalvarez@gmail.com', 'cash on delivery', '1, , Albay, Guinobatan, Lomacao, 4503', 'Hatsu Soda (50 x 1) - ', 50, '2024-06-03', 'pending', '', 'to ship'),
-(21, 4, 'Krizia Alvarez', '0987654323', 'kriziaalvarez@gmail.com', 'gcash', '1, , Albay, Guinobatan, Lomacao, 4503', 'Capsicum (50 x 2) - Hatsu Soda (50 x 6) - ', 400, '2024-06-03', 'pending', '7777777777777', 'to ship'),
-(22, 4, 'Krizia Alvarez', '0987654323', 'kriziaalvarez@gmail.com', 'gcash', '1, , Albay, Guinobatan, Lomacao, 4503', 'Capsicum (50 x 2) - Hatsu Soda (50 x 6) - ', 400, '2024-06-03', 'pending', '7777777777777', 'to ship'),
-(23, 4, 'Krizia Alvarez', '0987654323', 'kriziaalvarez@gmail.com', 'gcash', '1, , Albay, Guinobatan, Lomacao, 4503', 'Capsicum (50 x 2) - Hatsu Soda (50 x 6) - ', 400, '2024-06-03', 'pending', '7777777777777', 'to ship'),
-(24, 4, 'Krizia Alvarez', '0987654323', 'kriziaalvarez@gmail.com', 'gcash', '1, , Albay, Guinobatan, Lomacao, 4503', 'Capsicum (50 x 2) - Hatsu Soda (50 x 6) - ', 400, '2024-06-03', 'pending', '7777777777777', 'to ship'),
-(25, 4, 'Krizia Alvarez', '0987654323', 'kriziaalvarez@gmail.com', 'cash on delivery', '1, , Albay, Guinobatan, Lomacao, 4503', 'Pocky (85 x 23) - ', 1955, '2024-06-03', 'pending', '', 'to ship'),
-(26, 4, 'Krizia Alvarez', '0987654323', 'kriziaalvarez@gmail.com', 'cash on delivery', '1, , Albay, Guinobatan, Lomacao, 4503', 'Capsicum (50 x 4) - ', 200, '2024-06-03', 'pending', '', 'to ship'),
-(27, 4, 'Krizia Alvarez', '0987654323', 'kriziaalvarez@gmail.com', 'gcash', '1, , Albay, Guinobatan, Lomacao, 4503', 'Capsicum (50 x 8) - ', 400, '2024-06-03', 'pending', 'uuuuuuuuuuu', 'to ship'),
-(28, 4, 'Krizia Alvarez', '0987654323', 'kriziaalvarez@gmail.com', 'cash on delivery', '1, , Albay, Guinobatan, Lomacao, 4503', 'Capsicum (50 x 1) - Hatsu Soda (50 x 1) - ', 100, '2024-06-03', 'pending', '', 'to ship'),
-(29, 4, 'Krizia Alvarez', '0987654323', 'kriziaalvarez@gmail.com', 'cash on delivery', '1, , Albay, Guinobatan, Lomacao, 4503', 'Capsicum (50 x 5) - ', 250, '2024-06-03', 'pending', '', 'to ship'),
-(30, 4, 'Krizia Alvarez', '0987654323', 'kriziaalvarez@gmail.com', 'cash on delivery', '1, , Albay, Guinobatan, Lomacao, 4503', 'Capsicum (50 x 1) - Hatsu Soda (50 x 1) - Sun Puffs (25 x 1) - ', 125, '2024-06-03', 'pending', '', 'to ship'),
-(31, 2, 'Ruffa Mae Nabor', '0977043572', 'ruffamaenabor@gmail.com', 'cash on delivery', '1, , Albay, Guinobatan, Lomacao, 4503', 'Capsicum (50 x 3) - Hatsu Soda (50 x 1) - Sun Puffs (25 x 6) - Vita Drink (50 x 6) - Apple (25 x 1) - ', 675, '2024-06-03', 'pending', '', 'to ship'),
-(32, 2, 'Ruffa Mae Nabor', '0977043572', 'ruffamaenabor@gmail.com', 'cash on delivery', '1, , Albay, Guinobatan, Lomacao, 4503', 'Capsicum (50 x 1) - Hatsu Soda (50 x 1) - Sun Puffs (25 x 1) - ', 125, '2024-06-03', 'pending', '', 'to ship'),
-(33, 2, 'Ruffa Mae Nabor', '0977043572', 'ruffamaenabor@gmail.com', 'cash on delivery', '1, , Albay, Guinobatan, Lomacao, 4503', 'Capsicum (50 x 1) - ', 50, '2024-06-03', 'pending', '', 'to ship'),
-(34, 2, 'Ruffa Mae Nabor', '0977043572', 'ruffamaenabor@gmail.com', 'cash on delivery', '1, , Albay, Guinobatan, Lomacao, 4503', 'Capsicum (50 x 1) - ', 50, '2024-06-03', 'completed', '', 'delivered'),
-(35, 2, 'Ruffa Mae Nabor', '0977043572', 'ruffamaenabor@gmail.com', 'cash on delivery', '1, , Albay, Guinobatan, Lomacao, 4503', 'Water Melon (100 x 13) - ', 1300, '2024-06-03', 'pending', '', 'to ship'),
-(36, 2, 'Ruffa Mae Nabor', '0977043572', 'ruffamaenabor@gmail.com', 'cash on delivery', '1, , Albay, Guinobatan, Lomacao, 4503', 'Capsicum (50 x 1) - ', 50, '2024-06-03', 'pending', '', 'to ship'),
-(37, 2, 'Ruffa Mae Nabor', '0977043572', 'ruffamaenabor@gmail.com', 'cash on delivery', '1, , Albay, Guinobatan, Lomacao, 4503', 'Capsicum (50 x 1) - ', 50, '2024-06-03', 'pending', '', 'to ship'),
-(38, 2, 'Ruffa Mae Nabor', '0977043572', 'ruffamaenabor@gmail.com', 'cash on delivery', '1, , Albay, Guinobatan, Lomacao, 4503', 'Sun Puffs (25 x 1) - Pocky (85 x 1) - ', 110, '2024-06-04', 'completed', '', 'delivered'),
-(39, 2, 'Ruffa Mae Nabor', '0977043572', 'ruffamaenabor@gmail.com', 'cash on delivery', '1, , Albay, Guinobatan, Lomacao, 4503', 'Capsicum (50 x 10) - ', 500, '2024-06-04', 'pending', '', 'to ship'),
-(40, 2, 'Ruffa Mae Nabor', '0977043572', 'ruffamaenabor@gmail.com', 'cash on delivery', '1, , Albay, Guinobatan, Lomacao, 4503', 'Capsicum (50 x 1) - ', 50, '2024-06-04', 'pending', '', 'to ship'),
-(41, 2, 'Ruffa Mae Nabor', '0977043572', 'ruffamaenabor@gmail.com', 'cash on delivery', '1, , Albay, Guinobatan, Lomacao, 4503', 'Capsicum (50 x 1) - ', 50, '2024-06-04', 'pending', '', 'to ship'),
-(42, 2, 'Ruffa Mae Nabor', '0977043572', 'ruffamaenabor@gmail.com', 'gcash', '1, , Albay, Guinobatan, Lomacao, 4503', 'Capsicum (50 x 19) - Sun Puffs (25 x 5) - ', 1075, '2024-06-04', 'pending', '859686856858', 'to ship'),
-(43, 2, 'Ruffa Mae Nabor', '0977043572', 'ruffamaenabor@gmail.com', 'cash on delivery', '1, , Albay, Guinobatan, Lomacao, 4503', 'Capsicum (50 x 9) - ', 450, '2024-06-04', 'pending', '', 'to ship');
+INSERT INTO `orders` (`id`, `user_id`, `name`, `number`, `email`, `method`, `address`, `total_products`, `total_price`, `placed_on`, `payment_status`, `reference_number`, `order_status`, `account_number`, `account_name`, `amount_paid`, `archived`) VALUES
+(2, 1, 'Hazel Bino', '0949660318', 'hazelbino837@gmail.com', 'cash on delivery', '1, tuscano, Albay, Polangui, Balinad, 4506', 'Hatsu Soda (50 x 1) - ', 50, '2024-06-01', 'pending', '', 'to receive', 0, '', 0, 0),
+(9, 1, 'Hazel Bino', '0949660318', 'hazelbino837@gmail.com', 'cash on delivery', '1, tuscano, Albay, Polangui, Balinad, 4506', 'Vita Drink (50 x 2) - ', 100, '2024-06-02', 'pending', '', 'to ship', 0, '', 0, 0),
+(10, 1, 'Hazel Bino', '0949660318', 'hazelbino837@gmail.com', 'cash on delivery', '1, tuscano, Albay, Polangui, Balinad, 4506', 'Orange (150 x 1) - ', 150, '2024-06-02', 'pending', '', 'to ship', 0, '', 0, 0),
+(12, 1, 'Hazel Bino', '0949660318', 'hazelbino837@gmail.com', 'gcash', '1, tuscano, Albay, Polangui, Balinad, 4506', 'Sun Puffs (25 x 1) - Hatsu Soda (50 x 1) - ', 75, '2024-06-02', 'completed', '09496603189', 'to ship', 0, '', 0, 0),
+(14, 1, 'Hazel Bino', '0949660318', 'hazelbino837@gmail.com', 'cash on delivery', '1, tuscano, Albay, Polangui, Balinad, 4506', 'Hatsu Soda (50 x 1) - apple (25 x 1) - ', 75, '2024-06-02', 'pending', '', 'to ship', 0, '', 0, 0),
+(15, 1, 'Hazel Bino', '0949660318', 'hazelbino837@gmail.com', 'cash on delivery', '1, tuscano, Albay, Polangui, Balinad, 4506', 'apple (25 x 1) - ', 25, '2024-06-02', 'pending', '', 'to ship', 0, '', 0, 0),
+(16, 1, 'Hazel Bino', '0949660318', 'hazelbino837@gmail.com', 'cash on delivery', '1, tuscano, Albay, Polangui, Balinad, 4506', 'apple (25 x 1) - ', 25, '2024-06-02', 'pending', '', 'to ship', 0, '', 0, 0),
+(17, 1, 'Hazel Bino', '0949660318', 'hazelbino837@gmail.com', 'cash on delivery', '1, tuscano, Albay, Polangui, Balinad, 4506', 'apple (25 x 1) - ', 25, '2024-06-02', 'pending', '', 'to ship', 0, '', 0, 0),
+(18, 2, 'eyy', '6394966031', 'yow@gmail.com', 'gcash', '1, 5, albay, polangui, Balinad, 4506', 'apple (25 x 1) - ', 25, '2024-06-05', 'pending', '1223434', 'to ship', 0, 'pupapips', 25, 0),
+(19, 2, 'eyy', '6394966031', 'yow@gmail.com', 'cash on delivery', '1, 5, albay, polangui, Balinad, 4506', 'apple (25 x 1) - ', 25, '2024-06-05', 'pending', '', 'to ship', 0, '', 0, 0),
+(20, 2, 'eyy', '6394966031', 'yow@gmail.com', 'gcash', '1, 5, albay, polangui, Balinad, 4506', 'apple (25 x 1) - ', 25, '2024-06-05', 'pending', '1223434', 'to ship', 976555678, 'pupapips', 25, 0),
+(21, 2, 'eyy', '6394966031', 'yow@gmail.com', 'gcash', '1, 5, albay, polangui, Balinad, 4506', 'apple (25 x 1) - ', 25, '2024-06-05', 'pending', '1223434', 'to ship', 976555678, 'pupapips', 25, 0),
+(22, 2, 'eyy', '6394966031', 'yow@gmail.com', 'gcash', '1, 5, albay, polangui, Balinad, 4506', 'Chinese Cabbage (200 x 1) - ', 200, '2024-06-05', 'pending', '1223434', 'to ship', 976555678, 'pupapips', 200, 0),
+(23, 2, 'eyy', '6394966031', 'yow@gmail.com', 'cash on delivery', '1, 5, albay, polangui, Balinad, 4506', 'Fanta (25 x 1) - ', 25, '2024-06-05', 'pending', '', 'to ship', 0, '', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products`
+--
+
+CREATE TABLE `products` (
+  `id` int(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `category` varchar(100) NOT NULL,
+  `price` int(10) NOT NULL,
+  `image` varchar(100) NOT NULL,
+  `date_added` date NOT NULL DEFAULT current_timestamp(),
+  `status` varchar(10) NOT NULL DEFAULT 'available',
+  `stocks` int(30) NOT NULL,
+  `description` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `category`, `price`, `image`, `date_added`, `status`, `stocks`) VALUES
-(6, 'Capsicum', 'Vegetables', 50, 'capsicum.png', '2024-06-01', 'available', 487),
-(11, 'Hatsu Soda', 'Beverages', 50, 'Hatsu Soda.png', '2024-06-03', 'available', 0),
-(12, 'Sun Puffs', 'Snacks', 25, 'Sun Puffs.jpg', '2024-06-03', 'available', 35),
-(13, 'Orange', 'Fruits', 150, 'orange.png', '2024-06-03', 'available', 200),
-(14, 'Apple', 'Fruits', 25, 'apple.png', '2024-06-03', 'available', 494),
-(15, 'Vita Drink', 'Beverages', 50, 'Vita Drink.png', '2024-06-03', 'available', 100),
-(16, 'Chinese Cabbage', 'Vegetables', 200, 'Chinese_Cabbage.jpg', '2024-06-03', 'available', 10000),
-(17, 'Pocky', 'Snacks', 85, 'pk.png', '2024-06-03', 'available', 78),
-(18, 'Banana', 'Fruits', 50, 'benene.png', '2024-06-03', 'available', 1000),
-(19, 'Carrots', 'Vegetables', 200, 'carrots.png', '2024-06-03', 'available', 20000),
-(20, 'Eggplant', 'Vegetables', 90, 'eggplant.png', '2024-06-03', 'available', 200),
-(21, 'Fanta', 'Beverages', 50, 'fanta.png', '2024-06-03', 'available', 400),
-(22, 'Sprite', 'Beverages', 30, 'sprite.png', '2024-06-03', 'available', 20),
-(23, 'Water Melon', 'Fruits', 100, 'watermelon.png', '2024-06-03', 'available', 8),
-(24, 'Cheetos', 'Snacks', 25, 'cheetos.jpg', '2024-06-03', 'available', 100);
+INSERT INTO `products` (`id`, `name`, `category`, `price`, `image`, `date_added`, `status`, `stocks`, `description`) VALUES
+(3, 'Chinese Cabbage', 'Vegetables', 200, 'Chinese Cabbage.jpg', '2024-06-01', 'sold out', 0, ''),
+(4, 'Hatsu Soda', 'Beverages', 50, 'Hatsu Soda.png', '2024-06-01', 'available', 0, ''),
+(5, 'Sun Puffs', 'Snacks', 25, 'Sun Puffs.jpg', '2024-06-01', 'available', 0, ''),
+(6, 'Capsicum', 'Vegetables', 50, 'capsicum.png', '2024-06-01', 'available', 0, ''),
+(7, 'Vita Drink', 'Beverages', 50, 'Vita Drink.png', '2024-06-01', 'available', 0, ''),
+(8, 'Orange', 'Fruits', 150, 'orange.png', '2024-06-01', 'available', 0, ''),
+(9, 'apple', 'Fruits', 25, 'apple.png', '2024-06-02', 'available', 100, ''),
+(10, 'Corn', 'Fruits', 50, 'corn.png', '2024-06-05', 'available', 100, ''),
+(11, 'Fanta', 'Beverages', 25, 'fanta.png', '2024-06-05', 'available', 100, ''),
+(12, 'Eggplant', 'Vegetables', 120, 'eggplant.png', '2024-06-05', 'available', 100, ''),
+(13, 'Cheetos', 'Snacks', 20, 'cheetos.jpg', '2024-06-05', 'available', 100, ''),
+(14, 'Pocky', 'Snacks', 50, 'pk.png', '2024-06-05', 'available', 100, ''),
+(15, 'Instant Noodles', 'Snacks', 50, 'Instant Noodles.jpg', '2024-06-05', 'available', 100, ''),
+(16, 'Cup Noodles', 'Snacks', 50, 'Cup Noodles.jpg', '2024-06-05', 'available', 100, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reviews`
+--
+
+CREATE TABLE `reviews` (
+  `id` int(100) NOT NULL,
+  `user_id` int(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `reviews` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `reviews`
 --
 
 INSERT INTO `reviews` (`id`, `user_id`, `name`, `email`, `reviews`) VALUES
-(6, 2, 'Ruffa Mae', 'ruffamaenabor@gmail.com', 'HEYYYYYYYYY'),
-(7, 3, 'Cyra Nas', 'cyranas@gmail.com', 'wazuppppppppp'),
-(8, 4, 'Krizia Alvarez', 'kriziaalvarez@gmail.com', 'waazuppppppp');
+(1, 0, 'Hazel Bino', 'hazelbino837@gmail.com', 'nice service!');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(100) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `number` varchar(10) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `address` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
@@ -104,9 +182,87 @@ INSERT INTO `reviews` (`id`, `user_id`, `name`, `email`, `reviews`) VALUES
 
 INSERT INTO `users` (`id`, `name`, `email`, `number`, `password`, `address`) VALUES
 (1, 'Hazel Bino', 'hazelbino837@gmail.com', '0949660318', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', '1, tuscano, Albay, Polangui, Balinad, 4506'),
-(2, 'Ruffa Mae Nabor', 'ruffamaenabor@gmail.com', '0977043572', '7c4a8d09ca3762af61e59520943dc26494f8941b', '1, , Albay, Guinobatan, Lomacao, 4503'),
-(3, 'Cyra Nas', 'cyranas@gmail.com', '0988765432', '31ace4ad1831aae866cd7951a842ca3e38f21981', ''),
-(4, 'Krizia Alvarez', 'kriziaalvarez@gmail.com', '0987654323', '4e03a774654dc40c978157615cfb7e97df3915aa', '1, , Albay, Guinobatan, Lomacao, 4503');
+(2, 'eyy', 'yow@gmail.com', '6394966031', '123', '1, 5, albay, polangui, Balinad, 4506');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `reviews`
+--
+ALTER TABLE `reviews`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `reviews`
+--
+ALTER TABLE `reviews`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
