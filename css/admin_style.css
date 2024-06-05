@@ -533,6 +533,44 @@ section{
    color:var(--main-color);
 }
 
+.archived-orders .box-container {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 20px;
+   justify-content: center;
+}
+
+.archived-orders .box {
+   background: #fff;
+   border-radius: 5px;
+   box-shadow: 0 0 10pxs rgba(0,0,0,0.1);
+   padding: 20px;
+   flex: 1 1 300px;
+   max-width: 300px;
+   color:var(--black);
+   border:var(--border);
+   border-radius: .5rem;
+}
+
+.box p {
+   margin-bottom: 10px;
+   font-size: 14px;
+   color: #000000;
+}
+
+.box span {
+   color:var(--main-color);
+}
+
+.flex-btn {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+
+
+
 
 
 
