@@ -26,6 +26,13 @@ if(isset($message)){
          <a href="archived_orders.php">Archive</a>
       </nav>
 
+      <div class="search-container">
+         <form method="GET" action="admin_search.php">
+            <input type="text" name="search_query" placeholder="Search..." class="search-box" required>
+            <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+         </form>
+      </div>
+
       <div class="icons">
          <div id="menu-btn" class="fas fa-bars"></div>
          <div id="user-btn" class="fas fa-user"></div>
